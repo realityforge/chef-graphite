@@ -3,11 +3,23 @@ include_recipe "apache2::mod_python"
 version = node[:graphite][:version]
 pyver = node[:graphite][:python_version]
 
-package "python-cairo-dev"
-package "python-django"
-package "python-django-tagging"
-package "python-memcache"
-package "python-rrdtool"
+pkgs = value_for_platform(
+  ["centos","redhat","fedora", "amazon"] => {
+    "default" => ["pycairo-devel", "python-memcached", "rrdtool-python"]
+  },
+  "default" => ["python-cairo-dev","python-django", "python-django-tagging", "python-memcache", "python-rrdtool"]
+)
+
+pkgs.each do |pkg|
+  package pkg do
+    action :install
+  end
+end
+
+if platform?("centos", "fedora", "redhat", "amazon")
+  python_pip "django" 
+  python_pip "django-tagging"
+end
 
 remote_file "/usr/src/graphite-web-#{version}.tar.gz" do
   source node[:graphite][:graphite_web][:uri]
