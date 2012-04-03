@@ -49,13 +49,13 @@ directory "/opt/graphite/lib/twisted/plugins/" do
   group node['apache']['group']
 end
 
-template "/etc/init.d/carbon" do
+template "/etc/init.d/carbon-cache" do
   owner "root"
   group "root"
   mode "0755"
   source "carbon.init.erb"
 end
 
-service "carbon" do
+service "carbon-cache" do
   action :enable
 end
