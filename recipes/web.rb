@@ -26,7 +26,7 @@ execute "install graphite-web" do
   cwd "/usr/src/graphite-web-#{version}"
 end
 
-template "/etc/apache2/sites-available/graphite" do
+template "#{node[:apache][:dir]}/sites-available/graphite" do
   source "graphite-vhost.conf.erb"
 end
 
