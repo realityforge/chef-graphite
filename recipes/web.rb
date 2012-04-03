@@ -17,8 +17,13 @@ pkgs.each do |pkg|
 end
 
 if platform?("centos", "fedora", "redhat", "amazon")
-  python_pip "django" 
-  python_pip "django-tagging"
+  python_pip 'django' do
+    version '1.3'
+    action :install
+  end
+  python_pip 'django-tagging' do
+    action :install
+  end
 end
 
 remote_file "/usr/src/graphite-web-#{version}.tar.gz" do
