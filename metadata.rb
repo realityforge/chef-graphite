@@ -5,10 +5,7 @@ description      "Installs/Configures graphite"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          "0.3.2"
 
-supports "ubuntu"
-
 depends "python"
 depends "apache2"
-depends "runit"
 
 suggests "graphiti"

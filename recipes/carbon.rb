@@ -49,6 +49,3 @@ directory "/opt/graphite/lib/twisted/plugins/" do
   group node['apache']['group']
 end
 
-runit_service "carbon-cache" do
-  finish_script true
-end

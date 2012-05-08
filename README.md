@@ -6,8 +6,12 @@ Installs and configures Graphite http://graphite.wikidot.com/
 Requirements
 ============
 
-* Ubuntu 10.04 (Lucid) - with default settings
-* Ubuntu 11.10 (Oneiric) - change node[:graphite][:python_version] to "2.7"
+Should run on CentOS 5+, RedHat etc.
+
+Tested On
+=========
+
+* Tested on Amazon Linux 64-bit (AMI:ami-f9231b8d).
 
 Attributes
 ==========
