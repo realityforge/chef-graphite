@@ -1,8 +1,5 @@
 include_recipe "apache2::mod_python"
 
-version = node[:graphite][:version]
-pyver = node[:graphite][:python_version]
-
 pkgs = value_for_platform(
   ["centos","redhat","fedora", "amazon"] => {
     "default" => ["pycairo-devel", "python-memcached", "rrdtool-python"]
@@ -26,21 +23,21 @@ if platform?("centos", "fedora", "redhat", "amazon")
   end
 end
 
-remote_file "/usr/src/graphite-web-#{version}.tar.gz" do
+remote_file "/usr/src/graphite-web-#{node[:graphite][:version]}.tar.gz" do
   source node[:graphite][:graphite_web][:uri]
   checksum node[:graphite][:graphite_web][:checksum]
 end
 
 execute "untar graphite-web" do
-  command "tar xzf graphite-web-#{version}.tar.gz"
-  creates "/usr/src/graphite-web-#{version}"
+  command "tar xzf graphite-web-#{node[:graphite][:version]}.tar.gz"
+  creates "/usr/src/graphite-web-#{node[:graphite][:version]}"
   cwd "/usr/src"
 end
 
 execute "install graphite-web" do
   command "python setup.py install"
-  creates "/opt/graphite/webapp/graphite_web-#{version}-py#{pyver}.egg-info"
-  cwd "/usr/src/graphite-web-#{version}"
+  creates "/opt/graphite/webapp/graphite_web-#{node[:graphite][:version]}-py#{node[:graphite][:python_version]}.egg-info"
+  cwd "/usr/src/graphite-web-#{node[:graphite][:version]}"
 end
 
 template "#{node[:apache][:dir]}/sites-available/graphite" do
