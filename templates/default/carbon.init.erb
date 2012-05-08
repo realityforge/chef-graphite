@@ -12,7 +12,7 @@ RETVAL=0
 start() {
 	echo -n $"Starting $prog: "
 
-	PYTHONPATH=/usr/local/lib/python<%= node[:graphite][:python_version] %>/dist-packages/ /opt/graphite/bin/carbon-cache.py start
+	PYTHONPATH=/usr/local/lib/python<%= node[:graphite][:python_version] %>/dist-packages/ <%= node[:graphite][:base_dir] %>/bin/carbon-cache.py start
 	RETVAL=$?
 
 	if [ $RETVAL = 0 ]; then
@@ -28,7 +28,7 @@ start() {
 stop() {
 	echo -n $"Stopping $prog: "
 
-	PYTHONPATH=/usr/local/lib/python<%= node[:graphite][:python_version] %>/dist-packages/ /opt/graphite/bin/carbon-cache.py stop > /dev/null 2>&1
+	PYTHONPATH=/usr/local/lib/python<%= node[:graphite][:python_version] %>/dist-packages/ <%= node[:graphite][:base_dir] %>/bin/carbon-cache.py stop > /dev/null 2>&1
 	RETVAL=$?
 
 	if [ $RETVAL = 0 ]; then
@@ -50,7 +50,7 @@ case "$1" in
 	stop
 	;;
   status)
-	PYTHONPATH=/usr/local/lib/python<%= node[:graphite][:python_version] %>/dist-packages/ /opt/graphite/bin/carbon-cache.py status
+	PYTHONPATH=/usr/local/lib/python<%= node[:graphite][:python_version] %>/dist-packages/ <%= node[:graphite][:base_dir] %>/bin/carbon-cache.py status
 	RETVAL=$?
 	;;
   restart)

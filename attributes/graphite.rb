@@ -30,5 +30,6 @@ default[:graphite][:carbon][:storage_schemas] =
     }
   ]
 
+default[:graphite][:base_dir] = "/opt/graphite"
 default[:graphite][:password] = "change_me"
 default[:graphite][:url] = "graphite"

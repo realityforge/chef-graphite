@@ -19,6 +19,6 @@ execute "install whisper" do
 end
 
 execute 'install whisper utils' do
-  command "cp /usr/src/whisper-#{version}/bin/* /opt/graphite/bin"
-  creates '/opt/graphite/bin/rrd2whisper.py' # and more
+  command "cp /usr/src/whisper-#{version}/bin/* #{node[:graphite][:base_dir]}/bin"
+  creates "#{node[:graphite][:base_dir]}/bin/rrd2whisper.py" # and more
 end
