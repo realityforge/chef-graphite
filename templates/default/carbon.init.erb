@@ -2,9 +2,6 @@
 #
 # Carbon (part of Graphite)
 #
-# chkconfig: 3 50 50
-# description: Carbon init.d
-. /etc/rc.d/init.d/functions
 
 prog=carbon
 RETVAL=0
@@ -12,13 +9,13 @@ RETVAL=0
 start() {
 	echo -n $"Starting $prog: "
 
-	PYTHONPATH=/usr/local/lib/python<%= node[:graphite][:python_version] %>/dist-packages/ <%= node[:graphite][:base_dir] %>/bin/carbon-cache.py start
+	PYTHONPATH=<%= node[:python][:pip][:prefix_dir] %>/lib/python<%= node[:graphite][:python_version] %>/dist-packages/ <%= node[:graphite][:base_dir] %>/bin/carbon-cache.py start
 	RETVAL=$?
 
 	if [ $RETVAL = 0 ]; then
-		success "carbon started"
+		echo "carbon started"
 	else
-		failure "carbon failed to start"
+		echo "carbon failed to start"
 	fi
 
 	echo
@@ -28,13 +25,13 @@ start() {
 stop() {
 	echo -n $"Stopping $prog: "
 
-	PYTHONPATH=/usr/local/lib/python<%= node[:graphite][:python_version] %>/dist-packages/ <%= node[:graphite][:base_dir] %>/bin/carbon-cache.py stop > /dev/null 2>&1
+	PYTHONPATH=<%= node[:python][:pip][:prefix_dir] %>/lib/python<%= node[:graphite][:python_version] %>/dist-packages/ <%= node[:graphite][:base_dir] %>/bin/carbon-cache.py stop > /dev/null 2>&1
 	RETVAL=$?
 
 	if [ $RETVAL = 0 ]; then
-		success "carbon stopped"
+		echo "carbon stopped"
 	else
-		failure "carbon failed to stop"
+		echo "carbon failed to stop"
 	fi
 
 	echo
@@ -50,7 +47,7 @@ case "$1" in
 	stop
 	;;
   status)
-	PYTHONPATH=/usr/local/lib/python<%= node[:graphite][:python_version] %>/dist-packages/ <%= node[:graphite][:base_dir] %>/bin/carbon-cache.py status
+	PYTHONPATH=<%= node[:python][:pip][:prefix_dir] %>/lib/python<%= node[:graphite][:python_version] %>/dist-packages/ <%= node[:graphite][:base_dir] %>/bin/carbon-cache.py status
 	RETVAL=$?
 	;;
   restart)
