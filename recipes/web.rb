@@ -55,7 +55,7 @@ directory "#{node[:graphite][:base_dir]}/storage" do
   group node['apache']['group']
 end
 
-directory '#{node[:graphite][:base_dir]}/storage/log' do
+directory "#{node[:graphite][:base_dir]}/storage/log" do
   owner node['apache']['user']
   group node['apache']['group']
 end
