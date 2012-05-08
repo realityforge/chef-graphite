@@ -10,17 +10,18 @@ default[:graphite][:whisper][:checksum] = "66c05eafe8d86"
 default[:graphite][:graphite_web][:uri] = "http://launchpadlibrarian.net/82112308/graphite-web-#{node[:graphite][:version]}.tar.gz"
 default[:graphite][:graphite_web][:checksum] = "cc78bab7fb26b"
 
-default[:graphite][:carbon][:line_receiver_interface] =   "127.0.0.1"
+default[:graphite][:carbon][:line_receiver_interface] = "127.0.0.1"
 default[:graphite][:carbon][:pickle_receiver_interface] = "127.0.0.1"
-default[:graphite][:carbon][:cache_query_interface] =     "127.0.0.1"
-default[:graphite][:carbon][:storage_schemas] = [
-  {
-    :name       => :catchall,
-    :priority   => 0,
-    :pattern    => '^.*',
-    :retentions => '10s:6h,1m:7d,10m:5y'
-  }
-]
+default[:graphite][:carbon][:cache_query_interface] = "127.0.0.1"
+default[:graphite][:carbon][:storage_schemas] =
+  [
+    {
+      :name => :catchall,
+      :priority => 0,
+      :pattern => '^.*',
+      :retentions => '10s:6h,1m:7d,10m:5y'
+    }
+  ]
 
 default[:graphite][:password] = "change_me"
 default[:graphite][:url] = "graphite"
