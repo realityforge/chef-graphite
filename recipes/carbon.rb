@@ -33,6 +33,7 @@ end
 template "/opt/graphite/conf/storage-schemas.conf" do
   owner node['apache']['user']
   group node['apache']['group']
+  notifies :restart, 'service[carbon-cache]'
 end
 
 execute "carbon: change graphite storage permissions to apache user" do
