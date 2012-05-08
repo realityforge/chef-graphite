@@ -24,12 +24,14 @@ end
 template "#{node[:graphite][:base_dir]}/conf/carbon.conf" do
   owner node['apache']['user']
   group node['apache']['group']
+  mode "600"
   notifies :restart, "service[carbon-cache]"
 end
 
 template "#{node[:graphite][:base_dir]}/conf/storage-schemas.conf" do
   owner node['apache']['user']
   group node['apache']['group']
+  mode "600"
   notifies :restart, 'service[carbon-cache]'
 end
 
@@ -44,6 +46,7 @@ end
 directory "#{node[:graphite][:base_dir]}/lib/twisted/plugins/" do
   owner node['apache']['user']
   group node['apache']['group']
+  mode "700"
 end
 
 template "/etc/init.d/carbon-cache" do
