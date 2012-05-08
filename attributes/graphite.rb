@@ -1,9 +1,8 @@
+include_attribute "python::default"
+
 default[:graphite][:version] = "0.9.9"
 
-python_version = "2.6"
-python_version = "2.7" if node["platform"] == "ubuntu" && node["platform_version"] >= "10.04"
-
-default[:graphite][:python_version] = python_version
+default[:graphite][:python_version] = node[:python][:version].gsub(/^([^\.]*)\.([^\.]+)(\.([^\.]+))$/,'\1.\2')
 
 default[:graphite][:carbon][:uri] = "http://launchpadlibrarian.net/82112362/carbon-#{node[:graphite][:version]}.tar.gz"
 default[:graphite][:carbon][:checksum] = "b3d42e3b93c09"
@@ -30,6 +29,6 @@ default[:graphite][:carbon][:storage_schemas] =
     }
   ]
 
-default[:graphite][:base_dir] = "/opt/graphite"
+override[:graphite][:base_dir] = "/opt/graphite"
 default[:graphite][:password] = "change_me"
 default[:graphite][:url] = "graphite"
