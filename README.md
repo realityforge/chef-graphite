@@ -20,10 +20,6 @@ Usage
 
 `recipe[graphite]` should build a stand-alone Graphite installation.
 
-`recipe[graphite::ganglia]` integrates with Ganglia. You'll want at
-least one monitor node (i.e. recipe[ganglia]) node to be running
-to use it.
-
 Caveats
 =======
 
