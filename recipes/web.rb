@@ -80,7 +80,7 @@ cookbook_file "#{node[:graphite][:base_dir]}/storage/graphite.db" do
 end
 
 execute "set admin password" do
-  command "#{node[:graphite][:base_dir]}/bin/set_admin_passwd.py root #{node[:graphite][:password]}"
+  command "#{node[:graphite][:base_dir]}/bin/set_admin_passwd.py root #{node[:graphite][:web][:password]}"
   action :nothing
 end
 

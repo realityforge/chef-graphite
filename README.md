@@ -13,7 +13,7 @@ Requirements
 Attributes
 ==========
 
-* `node[:graphite][:password]` sets the default password for graphite "root" user.
+* `node[:graphite][:web][:password]` sets the default password for graphite "root" user.
 
 Usage
 =====
