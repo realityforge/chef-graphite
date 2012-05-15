@@ -24,8 +24,8 @@ if platform?("centos", "fedora", "redhat", "amazon")
 end
 
 remote_file "/usr/src/graphite-web-#{node[:graphite][:version]}.tar.gz" do
-  source node[:graphite][:graphite_web][:uri]
-  checksum node[:graphite][:graphite_web][:checksum]
+  source node[:graphite][:web][:package_url]
+  checksum node[:graphite][:web][:package_checksum]
 end
 
 execute "untar graphite-web" do

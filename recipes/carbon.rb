@@ -2,8 +2,8 @@ package "python-twisted"
 package "python-simplejson"
 
 remote_file "/usr/src/carbon-#{node[:graphite][:version]}.tar.gz" do
-  source node[:graphite][:carbon][:uri]
-  checksum node[:graphite][:carbon][:checksum]
+  source node[:graphite][:carbon][:package_url]
+  checksum node[:graphite][:carbon][:package_checksum]
 end
 
 execute "untar carbon" do
