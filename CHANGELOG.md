@@ -1,3 +1,7 @@
+## v0.3.3:
+
+* Enhance : Update to support configuration of storage schemas through attributes.
+
 ## v0.3.2:
 
 * Enhance : Add preliminary in support for RPM based systems.
