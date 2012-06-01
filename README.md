@@ -7,13 +7,13 @@ Requirements
 ============
 
 * Ubuntu 10.04 (Lucid) - with default settings
-* Ubuntu 11.10 (Oneiric) - change node[:graphite][:python_version] to "2.7"
+* Ubuntu 11.10 (Oneiric) - change node['graphite']['python_version'] to "2.7"
 * Should run on CentOS 5+, RedHat etc.
 
 Attributes
 ==========
 
-* `node[:graphite][:web][:password]` sets the default password for graphite "root" user.
+* `node['graphite']['web']['password']` sets the default password for graphite "root" user.
 
 Usage
 =====

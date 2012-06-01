@@ -4,15 +4,15 @@
 
 # You may need to manually edit this file to fit your needs.
 
-<VirtualHost <%= node[:graphite][:web][:interface] %>:<%= node[:graphite][:web][:port] %>>
-        ServerName <%= node[:graphite][:web][:host] %>
-        DocumentRoot "<%= node[:graphite][:base_dir] %>/webapp"
-        ErrorLog <%= node[:graphite][:base_dir] %>/storage/log/webapp/error.log
-        CustomLog <%= node[:graphite][:base_dir] %>/storage/log/webapp/access.log common
+<VirtualHost <%= node['graphite']['web']['interface'] %>:<%= node['graphite']['web']['port'] %>>
+        ServerName <%= node['graphite']['web']['host'] %>
+        DocumentRoot "<%= node['graphite']['base_dir'] %>/webapp"
+        ErrorLog <%= node['graphite']['base_dir'] %>/storage/log/webapp/error.log
+        CustomLog <%= node['graphite']['base_dir'] %>/storage/log/webapp/access.log common
 
         <Location "/">
                 SetHandler python-program
-                PythonPath "['<%= node[:graphite][:base_dir] %>/webapp'] + sys.path"
+                PythonPath "['<%= node['graphite']['base_dir'] %>/webapp'] + sys.path"
                 PythonHandler django.core.handlers.modpython
                 SetEnv DJANGO_SETTINGS_MODULE graphite.settings
                 PythonDebug Off
@@ -27,10 +27,23 @@
                 SetHandler None
         </Location>
 
-        <% if node[:recipes].include? "ganglia::web" -%>
+        <% if node['recipes'].include? "ganglia::web" -%>
 	<Location "/ganglia/">
 	        SetHandler None
 	</Location>
         <% end -%>
+
+  <% if node['gdash']['prefix'] -%>
+    <Location "<%= node['gdash']['prefix'] %>">
+      Order allow,deny
+      Allow from all
+      SetHandler None
+    </Location>
+
+    ProxyPass              <%= node['gdash']['prefix'] %>  http://<%= node['gdash']['interface'] %>:<%= node['gdash']['port'] %>
+    ProxyPassReverse       <%= node['gdash']['prefix'] %>  http://<%= node['gdash']['interface'] %>:<%= node['gdash']['port'] %>
+  <% end -%>
+
+
 
 </VirtualHost>
