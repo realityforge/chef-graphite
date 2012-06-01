@@ -7,5 +7,3 @@ version          "0.3.3"
 
 depends "python"
 depends "apache2"
-
-suggests "graphiti"
