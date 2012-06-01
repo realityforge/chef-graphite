@@ -1,5 +1,6 @@
 ## v0.3.3:
 
+* Enhance : Support collection of storage schema configuration from other nodes through search.
 * Enhance : Update to support configuration of storage schemas through attributes.
 
 ## v0.3.2:
