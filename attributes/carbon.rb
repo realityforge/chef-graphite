@@ -1,7 +1,7 @@
 include_attribute "graphite::default"
 
 default['graphite']['carbon']['package_url'] = "http://launchpadlibrarian.net/82112362/carbon-#{node['graphite']['version']}.tar.gz"
-default['graphite']['carbon']['package_checksum'] = "b3d42e3b93c09"
+default['graphite']['carbon']['package_checksum'] = "4f37e00595b5b"
 default['graphite']['carbon']['line_receiver']['interface'] = "127.0.0.1"
 default['graphite']['carbon']['line_receiver']['port'] = 2003
 default['graphite']['carbon']['pickle_receiver']['interface'] = "127.0.0.1"
