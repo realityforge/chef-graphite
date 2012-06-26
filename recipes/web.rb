@@ -50,7 +50,6 @@ apache_site "000-default" do
 end
 
 directory node['graphite']['storage_dir'] do
-apache_site "graphite"
   owner node['apache']['user']
   group node['apache']['group']
 end
@@ -87,3 +86,5 @@ file "#{node['graphite']['storage_dir']}/graphite.db" do
   group node['apache']['group']
   mode "644"
 end
+
+apache_site "graphite"
