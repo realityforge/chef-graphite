@@ -25,7 +25,7 @@ end
 
 remote_file "/usr/src/graphite-web-#{node['graphite']['version']}.tar.gz" do
   source node['graphite']['web']['package_url']
-  checksum node['graphite']['web']['package_checksum']
+  action :create_if_missing
 end
 
 execute "untar graphite-web" do

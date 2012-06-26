@@ -3,7 +3,7 @@ package "python-simplejson"
 
 remote_file "/usr/src/carbon-#{node['graphite']['version']}.tar.gz" do
   source node['graphite']['carbon']['package_url']
-  checksum node['graphite']['carbon']['package_checksum']
+  action :create_if_missing
 end
 
 execute "untar carbon" do

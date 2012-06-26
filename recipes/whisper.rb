@@ -1,6 +1,6 @@
 remote_file "/usr/src/whisper-#{node['graphite']['version']}.tar.gz" do
   source node['graphite']['whisper']['package_url']
-  checksum node['graphite']['whisper']['package_checksum']
+  action :create_if_missing
 end
 
 execute "untar whisper" do
