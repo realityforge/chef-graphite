@@ -28,6 +28,29 @@ CMD
   end
 end
 
+default_whisper_data_dir = "#{node['graphite']['storage_dir']}/whisper"
+whisper_data_dir = node['graphite']['whisper']['data_dir']
+
+if default_whisper_data_dir != whisper_data_dir
+  unless ::File.symlink?(default_whisper_data_dir)
+    directory default_whisper_data_dir do
+      action :delete
+      recursive true
+    end
+  end
+  directory whisper_data_dir do
+    owner node['apache']['user']
+    group node['apache']['group']
+    mode "0700"
+    recursive true
+  end
+  link default_whisper_data_dir do
+    to whisper_data_dir
+    owner node['apache']['user']
+    group node['apache']['group']
+  end
+end
+
 template "#{node['graphite']['base_dir']}/conf/carbon.conf" do
   owner node['apache']['user']
   group node['apache']['group']
