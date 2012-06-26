@@ -49,22 +49,17 @@ apache_site "000-default" do
   enable false
 end
 
+directory node['graphite']['storage_dir'] do
 apache_site "graphite"
-
-directory "#{node['graphite']['base_dir']}/storage" do
   owner node['apache']['user']
   group node['apache']['group']
 end
 
-directory "#{node['graphite']['base_dir']}/storage/log" do
-  owner node['apache']['user']
-  group node['apache']['group']
-end
-
-%w{ webapp whisper }.each do |dir|
-  directory "#{node['graphite']['base_dir']}/storage/log/#{dir}" do
+%w{ log log/webapp log/whisper }.each do |dir|
+  directory "#{node['graphite']['storage_dir']}/#{dir}" do
     owner node['apache']['user']
     group node['apache']['group']
+    mode '700'
   end
 end
 
@@ -75,7 +70,7 @@ template "#{node['graphite']['base_dir']}/bin/set_admin_passwd.py" do
   mode "755"
 end
 
-cookbook_file "#{node['graphite']['base_dir']}/storage/graphite.db" do
+cookbook_file "#{node['graphite']['storage_dir']}/graphite.db" do
   action :create_if_missing
   notifies :run, "execute[set admin password]"
 end
@@ -87,7 +82,7 @@ execute "set admin password" do
   action :nothing
 end
 
-file "#{node['graphite']['base_dir']}/storage/graphite.db" do
+file "#{node['graphite']['storage_dir']}/graphite.db" do
   owner node['apache']['user']
   group node['apache']['group']
   mode "644"

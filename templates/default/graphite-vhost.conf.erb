@@ -7,14 +7,15 @@
 <VirtualHost <%= node['graphite']['web']['interface'] %>:<%= node['graphite']['web']['port'] %>>
         ServerName <%= node['graphite']['web']['host'] %>
         DocumentRoot "<%= node['graphite']['base_dir'] %>/webapp"
-        ErrorLog <%= node['graphite']['base_dir'] %>/storage/log/webapp/error.log
-        CustomLog <%= node['graphite']['base_dir'] %>/storage/log/webapp/access.log common
+        ErrorLog <%= node['graphite']['storage_dir'] %>/log/webapp/error.log
+        CustomLog <%= node['graphite']['storage_dir'] %>/log/webapp/access.log common
 
         <Location "/">
                 SetHandler python-program
                 PythonPath "['<%= node['graphite']['base_dir'] %>/webapp'] + sys.path"
                 PythonHandler django.core.handlers.modpython
                 SetEnv DJANGO_SETTINGS_MODULE graphite.settings
+                SetEnv GRAPHITE_STORAGE_DIR <%= node['graphite']['storage_dir'] %>/
                 PythonDebug Off
                 PythonAutoReload Off
         </Location>
