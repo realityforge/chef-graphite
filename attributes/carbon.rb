@@ -15,5 +15,5 @@ default['graphite']['carbon']['storage_schemas']['catchall'] =
   {
     'priority' => 0,
     'pattern' => '^.*',
-    'retentions' => '10s:6h,1m:7d,10m:5y'
+    'retentions' => '10s:6h,1m:7d,10m:60d'
   }
