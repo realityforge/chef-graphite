@@ -15,7 +15,7 @@ execute "install whisper" do
   cwd "#{Chef::Config[:file_cache_path]}/whisper-#{node['graphite']['version']}"
 end
 
-directory "#{node['graphite']['base_dir']}" do
+directory node['graphite']['base_dir'] do
   owner node['apache']['user']
   group node['apache']['group']
   mode "700"
