@@ -80,6 +80,8 @@ cookbook_file "#{node['graphite']['base_dir']}/storage/graphite.db" do
   notifies :run, "execute[set admin password]"
 end
 
+raise "Must specify the attribute node['graphite']['web']['password']" unless node['graphite']['web']['password']
+
 execute "set admin password" do
   command "#{node['graphite']['base_dir']}/bin/set_admin_passwd.py root #{node['graphite']['web']['password']}"
   action :nothing
