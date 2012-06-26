@@ -53,14 +53,6 @@ template "#{node['graphite']['base_dir']}/conf/storage-schemas.conf" do
   notifies :restart, 'service[carbon-cache]'
 end
 
-execute "carbon: change graphite storage permissions to apache user" do
-  command "chown -R #{node['apache']['user']}:#{node['apache']['group']} #{node['graphite']['base_dir']}/storage"
-  only_if do
-    f = File.stat("#{node['graphite']['base_dir']}/storage")
-    f.uid == 0 and f.gid == 0
-  end
-end
-
 directory "#{node['graphite']['base_dir']}/lib/twisted/plugins/" do
   owner node['apache']['user']
   group node['apache']['group']
