@@ -18,6 +18,16 @@ execute "install carbon" do
   cwd "#{Chef::Config[:file_cache_path]}/carbon-#{node['graphite']['version']}"
 end
 
+# Graphite. Sometimes your releases are just plain bad.
+if node['graphite']['version'] == '0.9.10'
+  execute "patch_broken_graphite_file" do
+    command <<CMD
+sed -e 's/InvalidConfiguration/Exception/' #{node['graphite']['base_dir']}/lib/carbon/storage.py > #{node['graphite']['base_dir']}/lib/carbon/storage.py.bak
+mv #{node['graphite']['base_dir']}/lib/carbon/storage.py.bak #{node['graphite']['base_dir']}/lib/carbon/storage.py
+CMD
+  end
+end
+
 template "#{node['graphite']['base_dir']}/conf/carbon.conf" do
   owner node['apache']['user']
   group node['apache']['group']
