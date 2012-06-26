@@ -1,21 +1,21 @@
 package "python-twisted"
 package "python-simplejson"
 
-remote_file "/usr/src/carbon-#{node['graphite']['version']}.tar.gz" do
+remote_file "#{Chef::Config[:file_cache_path]}/carbon-#{node['graphite']['version']}.tar.gz" do
   source node['graphite']['carbon']['package_url']
   action :create_if_missing
 end
 
 execute "untar carbon" do
   command "tar xzf carbon-#{node['graphite']['version']}.tar.gz"
-  creates "/usr/src/carbon-#{node['graphite']['version']}"
-  cwd "/usr/src"
+  creates "#{Chef::Config[:file_cache_path]}/carbon-#{node['graphite']['version']}"
+  cwd Chef::Config[:file_cache_path]
 end
 
 execute "install carbon" do
   command "python setup.py install"
   creates "#{node['graphite']['base_dir']}/lib/carbon-#{node['graphite']['version']}-py#{node['graphite']['python_version']}.egg-info"
-  cwd "/usr/src/carbon-#{node['graphite']['version']}"
+  cwd "#{Chef::Config[:file_cache_path]}/carbon-#{node['graphite']['version']}"
 end
 
 template "#{node['graphite']['base_dir']}/conf/carbon.conf" do

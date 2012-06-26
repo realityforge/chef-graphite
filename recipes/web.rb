@@ -23,21 +23,21 @@ if platform?("centos", "fedora", "redhat", "amazon")
   end
 end
 
-remote_file "/usr/src/graphite-web-#{node['graphite']['version']}.tar.gz" do
+remote_file "#{Chef::Config[:file_cache_path]}/graphite-web-#{node['graphite']['version']}.tar.gz" do
   source node['graphite']['web']['package_url']
   action :create_if_missing
 end
 
 execute "untar graphite-web" do
   command "tar xzf graphite-web-#{node['graphite']['version']}.tar.gz"
-  creates "/usr/src/graphite-web-#{node['graphite']['version']}"
-  cwd "/usr/src"
+  creates "#{Chef::Config[:file_cache_path]}/graphite-web-#{node['graphite']['version']}"
+  cwd Chef::Config[:file_cache_path]
 end
 
 execute "install graphite-web" do
   command "python setup.py install"
   creates "#{node['graphite']['base_dir']}/webapp/graphite_web-#{node['graphite']['version']}-py#{node['graphite']['python_version']}.egg-info"
-  cwd "/usr/src/graphite-web-#{node['graphite']['version']}"
+  cwd "#{Chef::Config[:file_cache_path]}/graphite-web-#{node['graphite']['version']}"
 end
 
 template "#{node['apache']['dir']}/sites-available/graphite" do
