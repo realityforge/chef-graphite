@@ -72,7 +72,7 @@ end
 
 cookbook_file "#{node['graphite']['storage_dir']}/graphite.db" do
   action :create_if_missing
-  notifies :run, "execute[set admin password]"
+  notifies :run, "execute[set admin password]", :immediately
 end
 
 raise "Must specify the attribute node['graphite']['web']['password']" unless node['graphite']['web']['password']
