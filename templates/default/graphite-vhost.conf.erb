@@ -34,7 +34,7 @@
 	</Location>
         <% end -%>
 
-  <% if node['gdash']['prefix'] -%>
+  <% if node['gdash'] && node['gdash']['prefix'] -%>
     <Location "<%= node['gdash']['prefix'] %>">
       Order allow,deny
       Allow from all
