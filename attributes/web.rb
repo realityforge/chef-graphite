@@ -5,3 +5,4 @@ default['graphite']['web']['password'] = nil
 default['graphite']['web']['interface'] = node['ipaddress']
 default['graphite']['web']['host'] = node['fqdn']
 default['graphite']['web']['port'] = 80
+default['graphite']['web']['timezone'] = 'America/Chicago'

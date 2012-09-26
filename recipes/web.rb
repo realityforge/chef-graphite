@@ -50,6 +50,12 @@ template "#{node['apache']['dir']}/sites-available/graphite" do
   notifies :restart, resources(:service => "apache2")
 end
 
+template "#{node['graphite']['base_dir']}/webapp/graphite/local_settings.py" do
+  source "local_settings.py.erb"
+  notifies :restart, resources(:service => "apache2")
+  mode '644'
+end
+
 apache_site "000-default" do
   enable false
 end
