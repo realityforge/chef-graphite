@@ -32,7 +32,7 @@ execute "untar graphite-web" do
   command "tar xzf graphite-web-#{node['graphite']['version']}.tar.gz"
   creates "#{Chef::Config[:file_cache_path]}/graphite-web-#{node['graphite']['version']}"
   cwd Chef::Config[:file_cache_path]
-  action :none
+  action :nothing
   subscribes :run, resources(:remote_file => "#{Chef::Config[:file_cache_path]}/graphite-web-#{node['graphite']['version']}.tar.gz"), :immediately
 
 end
@@ -41,7 +41,7 @@ execute "install graphite-web" do
   command "python setup.py install"
   creates "#{node['graphite']['base_dir']}/webapp/graphite_web-#{node['graphite']['version']}-py#{node['graphite']['python_version']}.egg-info"
   cwd "#{Chef::Config[:file_cache_path]}/graphite-web-#{node['graphite']['version']}"
-  action :none
+  action :nothing
   subscribes :run, resources(:execute => "untar graphite-web"), :immediately
 end
 
