@@ -1,3 +1,8 @@
+## v0.3.6:
+
+* Fix     : Priority is no longer used in storage-schema so instead order the storage-schemas using the
+            priority. Submitted By Viral Shah.
+
 ## v0.3.3:
 
 * Enhance : Support collection of storage schema configuration from other nodes through search.
