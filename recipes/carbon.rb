@@ -62,18 +62,14 @@ template "#{node['graphite']['base_dir']}/conf/carbon.conf" do
   notifies :restart, "service[carbon-cache]"
 end
 
-if node['graphite']['carbon']['storage_schema_search']['enabled']
-  filter = node['graphite']['carbon']['storage_schema_search']['filter']
-  filter = filter.nil? ? '' : " AND #{filter}"
-
-  search(:node, "graphite_carbon_storage_schemas:*#{filter} AND NOT name:#{node.name}") do |n|
-    n['graphite']['carbon']['storage_schemas'].each_pair do |key, value|
-      node.override['graphite']['carbon']['storage_schemas'][key] = value
-    end
-  end
+template "#{node['graphite']['base_dir']}/conf/storage-schemas.conf" do
+  owner node['apache']['user']
+  group node['apache']['group']
+  mode "600"
+  notifies :restart, 'service[carbon-cache]'
 end
 
-template "#{node['graphite']['base_dir']}/conf/storage-schemas.conf" do
+template "#{node['graphite']['base_dir']}/conf/storage-aggregation.conf" do
   owner node['apache']['user']
   group node['apache']['group']
   mode "600"
