@@ -7,12 +7,11 @@ default['graphite']['carbon']['pickle_receiver']['interface'] = "127.0.0.1"
 default['graphite']['carbon']['pickle_receiver']['port'] = 2004
 default['graphite']['carbon']['cache_query']['interface'] = "127.0.0.1"
 default['graphite']['carbon']['cache_query']['port'] = 7002
-default['graphite']['carbon']['storage_schema_search']['enabled'] = false
-default['graphite']['carbon']['storage_schema_search']['filter'] = nil
-default['graphite']['carbon']['storage_schemas'] = Mash.new
-default['graphite']['carbon']['storage_schemas']['catchall'] =
+default['graphite']['carbon']['storage_schemas'] = [
   {
-    'priority' => 0,
+    'key' => 'catchall',
     'pattern' => '^.*',
     'retentions' => '10s:6h,1m:7d,10m:60d'
   }
+]
+default['graphite']['carbon']['storage_aggregation'] = Array.new
