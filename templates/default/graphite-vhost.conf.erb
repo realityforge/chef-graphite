@@ -4,35 +4,39 @@
 
 # You may need to manually edit this file to fit your needs.
 
+WSGIPythonOptimize 1
+
 <VirtualHost <%= node['graphite']['web']['interface'] %>:<%= node['graphite']['web']['port'] %>>
-        ServerName <%= node['graphite']['web']['host'] %>
-        DocumentRoot "<%= node['graphite']['base_dir'] %>/webapp"
-        ErrorLog <%= node['graphite']['storage_dir'] %>/log/webapp/error.log
-        CustomLog <%= node['graphite']['storage_dir'] %>/log/webapp/access.log common
+    ServerName <%= node['graphite']['web']['host'] %>
+    DocumentRoot "<%= node['graphite']['base_dir'] %>/webapp"
+    ErrorLog <%= node['graphite']['storage_dir'] %>/log/webapp/error.log
+    CustomLog <%= node['graphite']['storage_dir'] %>/log/webapp/access.log common
 
-        <Location "/">
-                SetHandler python-program
-                PythonPath "['<%= node['graphite']['base_dir'] %>/webapp'] + sys.path"
-                PythonHandler django.core.handlers.modpython
-                SetEnv DJANGO_SETTINGS_MODULE graphite.settings
-                SetEnv GRAPHITE_STORAGE_DIR <%= node['graphite']['storage_dir'] %>/
-                PythonDebug Off
-                PythonAutoReload Off
-        </Location>
+    WSGIDaemonProcess graphite \
+        user=<%= node['apache']['user'] %> processes=10 threads=5 maximum-requests=100000 inactivity-timeout=300 \
+        python-path=<%= node['graphite']['base_dir'] %>/webapp
 
-        <Location "/content/">
-                SetHandler None
-        </Location>
+    WSGIProcessGroup graphite
 
-        <Location "/media/">
-                SetHandler None
-        </Location>
+    WSGIScriptAlias / <%= node['graphite']['base_dir'] %>/conf/graphite.wsgi
+    WSGIImportScript <%= node['graphite']['base_dir'] %>/conf/graphite.wsgi process-group=graphite application-group=%{GLOBAL}
 
-        <% if node['recipes'].include? "ganglia::web" -%>
+    SetEnv DJANGO_SETTINGS_MODULE graphite.settings
+    SetEnv GRAPHITE_STORAGE_DIR <%= node['graphite']['storage_dir'] %>/
+
+    <Location "/content/">
+            SetHandler None
+    </Location>
+
+    <Location "/media/">
+            SetHandler None
+    </Location>
+
+  <% if node['recipes'].include? "ganglia::web" -%>
 	<Location "/ganglia/">
 	        SetHandler None
 	</Location>
-        <% end -%>
+  <% end -%>
 
   <% if node['gdash'] && node['gdash']['prefix'] -%>
     <Location "<%= node['gdash']['prefix'] %>">
