@@ -1,4 +1,4 @@
-include_recipe "apache2::mod_python"
+include_recipe "apache2::mod_wsgi"
 
 pkgs = value_for_platform(
   ["centos","redhat","fedora", "amazon"] => {
@@ -52,6 +52,12 @@ end
 
 template "#{node['graphite']['base_dir']}/webapp/graphite/local_settings.py" do
   source "local_settings.py.erb"
+  notifies :restart, resources(:service => "apache2")
+  mode '644'
+end
+
+template "#{node['graphite']['base_dir']}/conf/graphite.wsgi" do
+  source "graphite.wsgi.erb"
   notifies :restart, resources(:service => "apache2")
   mode '644'
 end
