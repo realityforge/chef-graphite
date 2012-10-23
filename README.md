@@ -1,6 +1,8 @@
 Description
 ===========
 
+[![Build Status](https://secure.travis-ci.org/realityforge/chef-graphite.png?branch=master)](http://travis-ci.org/realityforge/chef-graphite)
+
 Installs and configures Graphite http://graphite.wikidot.com/
 
 Requirements
