@@ -1,3 +1,5 @@
+raise "Must specify the attribute node['graphite']['web']['password']" unless node['graphite']['web']['password']
+
 include_recipe "apache2::mod_wsgi"
 
 pkgs = value_for_platform(
@@ -90,8 +92,6 @@ cookbook_file "#{node['graphite']['storage_dir']}/graphite.db" do
   action :create_if_missing
   notifies :run, "execute[set admin password]", :immediately
 end
-
-raise "Must specify the attribute node['graphite']['web']['password']" unless node['graphite']['web']['password']
 
 execute "set admin password" do
   command "#{node['graphite']['base_dir']}/bin/set_admin_passwd.py root #{node['graphite']['web']['password']}"
