@@ -30,12 +30,6 @@ WSGIPythonOptimize 1
             SetHandler None
     </Location>
 
-  <% if node['recipes'].include? "ganglia::web" -%>
-	<Location "/ganglia/">
-	        SetHandler None
-	</Location>
-  <% end -%>
-
   <% if node['gdash'] && node['gdash']['prefix'] -%>
     <Location "<%= node['gdash']['prefix'] %>">
       Order allow,deny
