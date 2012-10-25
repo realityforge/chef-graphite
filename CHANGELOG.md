@@ -1,3 +1,8 @@
+## v0.6.0:
+
+* Change  : Remove the gdash integration in apache site. Users should move to using a separate vhost for gdash where
+            possible.
+
 ## v0.3.6:
 
 * Fix     : Priority is no longer used in storage-schema so instead order the storage-schemas using the
