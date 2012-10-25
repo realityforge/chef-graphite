@@ -1,5 +1,6 @@
 ## v0.6.0:
 
+* Enhance : Support udp listener in carbon. Submitted By Kurt Yoder.
 * Change  : Remove the gdash integration in apache site. Users should move to using a separate vhost for gdash where
             possible.
 
