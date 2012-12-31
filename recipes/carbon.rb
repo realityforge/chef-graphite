@@ -11,7 +11,7 @@ execute "untar carbon" do
   creates "#{Chef::Config[:file_cache_path]}/carbon-#{node['graphite']['version']}"
   cwd Chef::Config[:file_cache_path]
   action  :nothing
-  subscribes :run, resources(:remote_file => "#{Chef::Config[:file_cache_path]}/carbon-#{node['graphite']['version']}.tar.gz"), :immediately
+  subscribes :run, "remote_file[#{Chef::Config[:file_cache_path]}/carbon-#{node['graphite']['version']}.tar.gz]", :immediately
 end
 
 execute "install carbon" do
@@ -19,7 +19,7 @@ execute "install carbon" do
   creates "#{node['graphite']['base_dir']}/lib/carbon-#{node['graphite']['version']}-py#{node['graphite']['python_version']}.egg-info"
   cwd "#{Chef::Config[:file_cache_path]}/carbon-#{node['graphite']['version']}"
   action :nothing
-  subscribes :run, resources(:execute => "untar carbon"), :immediately
+  subscribes :run, 'execute[untar carbon]', :immediately
 end
 
 # Graphite. Sometimes your releases are just plain bad.

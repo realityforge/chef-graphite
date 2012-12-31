@@ -35,7 +35,7 @@ execute "untar graphite-web" do
   creates "#{Chef::Config[:file_cache_path]}/graphite-web-#{node['graphite']['version']}"
   cwd Chef::Config[:file_cache_path]
   action :nothing
-  subscribes :run, resources(:remote_file => "#{Chef::Config[:file_cache_path]}/graphite-web-#{node['graphite']['version']}.tar.gz"), :immediately
+  subscribes :run, "remote_file[#{Chef::Config[:file_cache_path]}/graphite-web-#{node['graphite']['version']}.tar.gz]", :immediately
 
 end
 
@@ -44,23 +44,23 @@ execute "install graphite-web" do
   creates "#{node['graphite']['base_dir']}/webapp/graphite_web-#{node['graphite']['version']}-py#{node['graphite']['python_version']}.egg-info"
   cwd "#{Chef::Config[:file_cache_path]}/graphite-web-#{node['graphite']['version']}"
   action :nothing
-  subscribes :run, resources(:execute => "untar graphite-web"), :immediately
+  subscribes :run, 'execute[untar graphite-web]', :immediately
 end
 
 template "#{node['apache']['dir']}/sites-available/graphite" do
   source "graphite-vhost.conf.erb"
-  notifies :restart, resources(:service => "apache2")
+  notifies :restart, 'service[apache2]'
 end
 
 template "#{node['graphite']['base_dir']}/webapp/graphite/local_settings.py" do
   source "local_settings.py.erb"
-  notifies :restart, resources(:service => "apache2")
+  notifies :restart, 'service[apache2]'
   mode '644'
 end
 
 template "#{node['graphite']['base_dir']}/conf/graphite.wsgi" do
   source "graphite.wsgi.erb"
-  notifies :restart, resources(:service => "apache2")
+  notifies :restart, 'service[apache2]'
   mode '644'
 end
 

@@ -8,7 +8,7 @@ execute "untar whisper" do
   creates "#{Chef::Config[:file_cache_path]}/whisper-#{node['graphite']['version']}"
   cwd Chef::Config[:file_cache_path]
   action :nothing
-  subscribes :run, resources(:remote_file => "#{Chef::Config[:file_cache_path]}/whisper-#{node['graphite']['version']}.tar.gz"), :immediately
+  subscribes :run, "remote_file[#{Chef::Config[:file_cache_path]}/whisper-#{node['graphite']['version']}.tar.gz]", :immediately
 end
 
 execute "install whisper" do
@@ -16,7 +16,7 @@ execute "install whisper" do
   creates "#{node['python']['pip']['prefix_dir']}/lib/python#{node['graphite']['python_version']}/dist-packages/whisper-#{node['graphite']['version']}.egg-info"
   cwd "#{Chef::Config[:file_cache_path]}/whisper-#{node['graphite']['version']}"
   action :nothing
-  subscribes :run, resources(:execute => "untar whisper"), :immediately
+  subscribes :run, 'execute[untar whisper]', :immediately
 end
 
 directory node['graphite']['base_dir'] do
