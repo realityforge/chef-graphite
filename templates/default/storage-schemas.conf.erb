@@ -10,7 +10,7 @@
 #  retentions = timePerPoint:timeToStore, timePerPoint:timeToStore, ...
 #
 #
-<% node['graphite']['carbon']['storage_schemas'].sort_by { |key, config| "#{(config['priority'] || 0)}#{key}" }.each do |key, config| %>
+<% node['graphite']['carbon']['storage_schemas'].sort_by { |key, config| (config['priority'] || 0) }.sort_by{ |key, config| "key" }.each do |key, config| %>
 [<%= key %>]
 <% if config['pattern'] -%>
 pattern = <%= config['pattern'] %>

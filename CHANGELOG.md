@@ -1,4 +1,10 @@
 ## v0.6.0:
+* Change  : Change storage_aggregation attribute to also use priorities like storage_schema attribute
+
+## v0.5.1:
+* BugFix  : Fix how priorities are treated in storage_schema attribute
+
+## v0.5.0:
 
 * Change  : Prefer new notification syntax.
 * Enhance : Support udp listener in carbon. Submitted By Kurt Yoder.
