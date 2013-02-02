@@ -16,16 +16,16 @@
 #  aggregationMethod: function to apply to data points for aggregation
 #
 
-<% node['graphite']['carbon']['storage_aggregation'].each do |aggregation| %>
-[<%= aggregation['key'] %>]
-<% if aggregation['pattern'] -%>
-pattern = <%= aggregation['pattern'] %>
+<% node['graphite']['carbon']['storage_aggregation'].sort_by { |key, config| (config['priority'] || 0) }.sort_by{ |key, config| "key" }.each do |key, config| %>
+[<%= key %>]
+<% if config['pattern'] -%>
+pattern = <%= config['pattern'] %>
 <% end %>
-<% if aggregation['x_files_factor'] -%>
-xFilesFactor = <%= aggregation['x_files_factor'] %>
+<% if config['x_files_factor'] -%>
+xFilesFactor = <%= config['x_files_factor'] %>
 <% end %>
-<% if aggregation['aggregation_method'] -%>
-aggregationMethod = <%= aggregation['aggregation_method'] %>
+<% if config['aggregation_method'] -%>
+aggregationMethod = <%= config['aggregation_method'] %>
 <% end %>
 
 <% end %>
