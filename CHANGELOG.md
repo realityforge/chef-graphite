@@ -1,3 +1,6 @@
+## v0.6.1:
+* Change  : Reverse order of notification for carbon.conf template file
+
 ## v0.6.0:
 * Change  : Change storage_aggregation attribute to also use priorities like storage_schema attribute
 

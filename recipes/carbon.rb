@@ -59,7 +59,6 @@ template "#{node['graphite']['base_dir']}/conf/carbon.conf" do
   owner node['apache']['user']
   group node['apache']['group']
   mode "600"
-  notifies :restart, "service[carbon-cache]"
 end
 
 template "#{node['graphite']['base_dir']}/conf/storage-schemas.conf" do
@@ -89,4 +88,5 @@ end
 
 service "carbon-cache" do
   action :enable
+  subscribes :restart, resources("template[#{node['graphite']['base_dir']}/conf/carbon.conf]"), :delayed
 end
