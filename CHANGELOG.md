@@ -1,5 +1,6 @@
 ## v0.6.2:
 * Enhance : adding ability to set memcached hosts for graphite web
+* Enhance : add attribute to control max_creates_per_minute
 
 ## v0.6.1:
 * Change  : Reverse order of notification for carbon.conf template file
