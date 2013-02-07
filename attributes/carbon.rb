@@ -9,6 +9,7 @@ default['graphite']['carbon']['udp_receiver']['interface'] = "127.0.0.1"
 default['graphite']['carbon']['udp_receiver']['port'] = 2005
 default['graphite']['carbon']['cache_query']['interface'] = "127.0.0.1"
 default['graphite']['carbon']['cache_query']['port'] = 7002
+default['graphite']['carbon']['max_creates_per_minute'] = 'inf' # infinity
 default['graphite']['carbon']['storage_schemas']['catchall']['pattern'] = '^.*'
 default['graphite']['carbon']['storage_schemas']['catchall']['retentions'] = '10s:6h,1m:7d,10m:60d'
 default['graphite']['carbon']['storage_aggregation'] = Hash.new
